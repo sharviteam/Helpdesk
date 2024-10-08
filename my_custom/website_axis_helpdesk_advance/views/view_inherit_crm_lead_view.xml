@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+         <record id="view_crm_lead_ticket_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.ticket.inherit.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_schedule_meeting']" position="after">
+                <button type="object" name="action_view_ticket" class="oe_stat_button" icon="fa-tasks"  groups="website_axis_helpdesk_advance.group_crm_helpdesk_ticket">
+                    <field name="ticket_count" widget="statinfo" string="Ticket" />
+                </button>
+            </xpath>
+        </field>
+         </record>
+    </data>
+</odoo>

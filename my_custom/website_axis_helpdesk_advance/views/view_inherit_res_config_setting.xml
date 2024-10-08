@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_res_config_form_inherit_helpdesk" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.helpdesk</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <div class="app_settings_block" data-string="Helpdesk" string="Helpdesk"  data-key="website_axis_helpdesk_advance"
+                     groups="website_axis_helpdesk_advance.group_helpdesk_ticket_admin">
+                    <div id="is_dashboard_sett">
+                            <h2>Ticket Dashboard Settings</h2>
+                            <div class="row mt16 o_settings_container" name="users_setting_container">
+                                <div class="col-12 col-lg-6 o_setting_box" id="active_user_setting">
+                                    <div class="o_setting_right_pane">
+<!--                                        <strong>Tickets Attachment   </strong><field name="is_attachment"/>-->
+                                        <strong>Dashboard Filter</strong>
+                                            <field name="helpdesk_stage_ids" class="w-auto pl-3 font-weight-bold" widget="many2many_tags" required="1"/>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <h2>Based On Product</h2>
+                    <div class="row">
+                        <div class="col-sm-2 col-md-2" style="margin-left: 5%;">
+
+                            <field name="manage_product"/>
+                             <label string="Manage&#160;Product" for="manage_product" style="font-size:20px;"
+                                       class="col-md-3 o_light_label"/>
+                        </div>
+
+                        <div class="col-sm-3 col-md-5" style="text-align:left">
+                              <div id="is_based_on_products">
+                                <div class="row mt16 o_settings_container" name="users_setting_container">
+                                    <div class="col-12 col-lg-6 o_setting_box" id="active_user_setting">
+                                        <div class="o_setting_right_pane">
+                                                <field name="manage_product_selection" class="w-auto pl-3 font-weight-bold"  widget="radio" invisible="manage_product"/>
+                                        </div>
+                                        <div class="o_setting_right_pane">
+                                            <b><label for="product_ids" string="Select Products"/> </b>
+                                                <field name="product_ids" class="w-auto pl-3 font-weight-bold"  widget="many2many_tags"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <br/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="website_helpdesk_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="view_res_config_form_inherit_helpdesk"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'website_axis_helpdesk_advance'}</field>
+    </record>
+
+
+    <menuitem id="menu_website_helpdesk_general_settings"
+              name="Settings"
+              parent="helpdesk_ticket_configuration"
+              sequence="3"
+              action="website_helpdesk_settings_action"/>
+
+
+</odoo>

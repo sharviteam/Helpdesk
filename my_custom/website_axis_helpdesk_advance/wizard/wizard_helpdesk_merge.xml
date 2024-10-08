@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_wizard_helpdesk_ticket_merge" model="ir.ui.view">
+            <field name="name">wizard.helpdesk.ticket.merge.form</field>
+            <field name="model">wizard.helpdesk.ticket.merge</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="user_id"/>
+                            <field name="ticket_type_id"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="team_id"/>
+                        </group>
+                        <group>
+
+                            <field name="customer_id"/>
+                            <field name="partner_email"/>
+<!--                             <field name="create_new_bool"/>-->
+                            <field name="sure_bool"/>
+                        </group>
+
+
+                    </group>
+                    <group>
+                        <notebook>
+                            <page string="Description">
+                            <field name="description" />
+                        </page>
+                        </notebook>
+                    </group>
+                    <footer>
+                        <button name="merge_ticket" string="Merged Ticket" type="object" default_focus="1" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+         <record id="merge_ticket_action" model="ir.actions.act_window">
+                    <field name="name">Merge Tickets</field>
+                    <field name="res_model">wizard.helpdesk.ticket.merge</field>
+                    <field name="view_mode">form</field>
+                    <field name="target">new</field>
+                    <field name="binding_model_id" ref="model_axis_helpdesk_ticket"/>
+              <field name="view_id" ref="website_axis_helpdesk_advance.view_wizard_helpdesk_ticket_merge"/>
+                </record>
+
+    </data>
+</odoo>

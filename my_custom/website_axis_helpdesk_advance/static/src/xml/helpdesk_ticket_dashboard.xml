@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+    <t t-name="HelpdeskDashboardView">
+        <div class="Helpdesk_dashboard">
+            <div class="container-fluid o_Helpdesk_dashboard">
+                <div class="sales-dashboard">
+                    <h4 class="text-primary text-center pt-5 helpdesk-top-cous">Helpdesk Dashboard</h4>
+                    <div class="container">
+                        <div class="appointment-cards pb-3">
+                            <div class="ticket-cards pt-5">
+                                <div class="row ">
+                                    <div class="col-md-3 margin-bottom-15">
+                                        <div class="card h-100 border-0 open-tickets position-relative">
+                                            <div class="o_main o_dashboard_action" title="My All tickets"
+                                                 name="*website_axis_helpdesk_advance.helpdesk_all_ticket_action_main" >
+                                                <div class="card-body open-tickets" t-on-click="action_my">
+                                                    <h4 class="card-title text-white text-center">My Tickets</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img class="img-fluid ticket-img"
+                                                                 src="/website_axis_helpdesk_advance/static/src/img/open-tickets-img.png"
+                                                                 width="80"/>
+                                                        </div>
+                                                        <div class="col-xl-6 col-md-8">
+                                                        <h2 class="card-text helpdesk-ticket-title-dash text-white">
+                                                            <span class="my_all_tickets">
+                                                                0
+                                                            </span>
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-3 margin-bottom-15">
+                                        <div class="card h-100 border-0 pending-tickets position-relative">
+                                            <div class="o_main o_dashboard_action" title="My Pending tickets"
+                                                 name="website_axis_helpdesk_advance.helpdesk_ticket_action_main">
+                                                <div class="card-body pending-tickets" t-on-click="action_my_pending">
+                                                    <h4 class="card-title text-white text-center">Pending Tickets</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img class="img-fluid ticket-img"
+                                                                 src="/website_axis_helpdesk_advance/static/src/img/pending-tickets-img.png"
+                                                                 width="80"/>
+                                                        </div>
+                                                        <div class="col-xl-6 col-md-8">
+                                                            <h2 class="card-text helpdesk-ticket-title-dash text-white">
+                                                                <span class="my_all">
+                                                                    0
+                                                                </span>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 margin-bottom-15">
+                                        <div class="card h-100 border-0 close-tickets position-relative">
+                                            <div class="o_main o_dashboard_action" title="My Closed tickets"
+                                                 name="website_axis_helpdesk_advance.helpdesk_all_closed_ticket_action_main" >
+                                                <div class="card-body close-tickets" t-on-click="action_close_appointment">
+                                                    <h4 class="card-title text-white text-center">Closed Tickets</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img class="img-fluid ticket-img"
+                                                                 src="/website_axis_helpdesk_advance/static/src/img/close-tickets-img.png"
+                                                                 width="80"/>
+                                                        </div>
+                                                        <div class="col-xl-6 col-md-8">
+                                                            <h2 class="card-text helpdesk-ticket-title-dash text-white">
+                                                                <span class="my_closed_tickets">
+                                                                    0
+                                                                    <!--                                                        <t t-esc="values['my_closed_tickets']['count']"/>-->
+                                                                </span>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 margin-bottom-15">
+                                        <div class="card h-100 border-0 success-tickets position-relative">
+                                            <div class="card-body success-tickets" t-on-click="action_success_tickets">
+                                                <h4 class="card-title text-white text-center">Success Rate</h4>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <img class="img-fluid ticket-img"
+                                                             src="/website_axis_helpdesk_advance/static/src/img/success-rate-icn.png"
+                                                             width="55"/>
+                                                    </div>
+                                                    <div class="col-xl-6 col-md-8">
+                                                        <a href="#" class="o_dashboard_action"
+                                                           name="website_axis_helpdesk_advance.helpdesk_ticket_action_success">
+                                                            <h2 class="card-text helpdesk-ticket-title-dash text-white">
+                                                                <span class="today">
+<!--                                                                    <t t-esc="values['today']['success']"/>%-->
+                                                                </span>%
+                                                            </h2>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="helpdesk-ticket-cards position-relative overflow-hidden helpdesk-ticket-card1 rounded p-sm-4 p-3 more-today-tickets" t-on-click="action_today_appointment">
+                                    <i class="fa fa-bell position-absolute opacity_icon"></i>
+                                        <div class="row align-items-center">
+                                      <div class="col-3 pr-0">
+                                        <h1 class="card_number_text m-0 text-white"><b class="today-ticket"></b></h1>
+                                      </div>
+                                            <div class="col-9">
+                                        <h4 class="mb-1 text-white card_up_title">Tickets</h4>
+                                                <h2 class="m-0 text-white card_main_title">Today</h2>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                  <div class="helpdesk-ticket-cards position-relative overflow-hidden helpdesk-ticket-card2 rounded p-sm-4 p-3 last-week-tickets">
+                                    <i class="fa fa-info-circle position-absolute opacity_icon"></i>
+                                      <div class="row align-items-center">
+                                      <div class="col-3 pr-0">
+                                        <h1 class="card_number_text m-0 text-white"><b class="last-week-ticket"></b></h1>
+                                      </div>
+                                          <div class="col-9" t-on-click="this_week">
+                                        <h4 class="mb-1 text-white card_up_title">Tickets</h4>
+                                              <h2 class="m-0 text-white card_main_title">Last Week</h2>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12" t-on-click="this_month">
+                                  <div class="helpdesk-ticket-cards position-relative overflow-hidden helpdesk-ticket-card3 rounded p-sm-4 p-3 last-month-booking">
+                                    <i class="fa fa-calendar position-absolute opacity_icon"></i>
+                                      <div class="row align-items-center">
+                                      <div class="col-3 pr-0">
+                                        <h1 class="card_number_text m-0 text-white"><b class="last-month-ticket"></b></h1>
+                                      </div>
+                                          <div class="col-9">
+                                        <h4 class="mb-1 text-white card_up_title">Tickets</h4>
+                                              <h2 class="m-0 text-white card_main_title">Last Month</h2>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12" t-on-click="this_year">
+                                  <div class="helpdesk-ticket-cards position-relative overflow-hidden helpdesk-ticket-card4 rounded p-sm-4 p-3 more-total-tickets">
+                                    <i class="fa fa-ticket position-absolute opacity_icon"></i>
+                                      <div class="row align-items-center">
+                                          <div class="col-3 pr-0">
+                                            <h1 class="card_number_text m-0 text-white"><b class="total-ticket"></b></h1>
+                                          </div>
+                                          <div class="col-9">
+                                            <h4 class="mb-1 text-white card_up_title">Total</h4>
+                                              <h2 class="m-0 text-white card_main_title">Tickets</h2>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <div class="row ">
+                                <div class="col-md-3 margin-bottom-15">
+                                    <div class="card h-100 border-0 close-tickets position-relative">
+                                        <div class="o_main o_dashboard_action" title="SLA Closed"
+                                             name="website_axis_helpdesk_advance.helpdesk_all_closed_ticket_action_main" t-on-click="action_sla_comp">
+                                            <div class="card-body close-tickets">
+                                                <h4 class="card-title text-white text-center">SLA Complete</h4>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <img class="img-fluid ticket-img"
+                                                             src="/website_axis_helpdesk_advance/static/src/img/close-tickets-img.png"
+                                                             width="80"/>
+                                                    </div>
+                                                    <div class="col-xl-6 col-md-8">
+                                                        <h2 class="card-text helpdesk-ticket-title-dash text-white">
+                                                            <span class="len_sla_complete">
+                                                                0
+                                                                <!--                                                        <t t-esc="values['my_closed_tickets']['count']"/>-->
+                                                            </span>
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 margin-bottom-15" t-on-click="action_sla_pending">
+                                    <div class="card h-100 border-0 success-tickets position-relative">
+                                        <div class="card-body success-tickets" t-on-click="action_pending_appointment">
+                                            <h4 class="card-title text-white text-center">SLA Pending</h4>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <img class="img-fluid ticket-img"
+                                                         src="/website_axis_helpdesk_advance/static/src/img/success-rate-icn.png"
+                                                         width="55"/>
+                                                </div>
+                                                <div class="col-xl-6 col-md-8">
+                                                    <a href="#" class="o_dashboard_action"
+                                                       name="website_axis_helpdesk_advance.helpdesk_ticket_action_success">
+                                                        <h2 class="card-text helpdesk-ticket-title-dash text-white">
+                                                            <spadn class="len_sla_pending">0
+<!--                                                                <t t-esc="values['today']['success']"/>%-->
+                                                            </spadn>
+                                                        </h2>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 margin-bottom-15" t-on-click="action_sla_missed">
+                                    <div class="card h-100 border-0 success-tickets position-relative" t-on-click="action_rejected_appointment">
+                                        <div class="card-body success-tickets">
+                                            <h4 class="card-title text-white text-center">SLA Missed</h4>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <img class="img-fluid ticket-img"
+                                                         src="/website_axis_helpdesk_advance/static/src/img/success-rate-icn.png"
+                                                         width="55"/>
+                                                </div>
+                                                <div class="col-xl-6 col-md-8">
+                                                    <a href="#" class="o_dashboard_action"
+                                                       name="website_axis_helpdesk_advance.helpdesk_ticket_action_success">
+                                                        <h2 class="card-text helpdesk-ticket-title-dash text-white">
+                                                            <spadn class="len_sla_pending">0
+<!--                                                                <t t-esc="values['today']['success']"/>%-->
+                                                            </spadn>
+                                                        </h2>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mx-0 pt-1">
+                                <!-- <div class="col-md-6 margin-bottom-15">
+                                    <div class="card h-100 border-0 overdue-tickets position-relative">
+                                        <div class="card-body border-coustome overdue-priority-column">
+                                            <h4 class="card-title text-dark text-center helpdesk-cous-text">Ticket Due Time</h4>
+                                            <div class="row m-0 pb-2">
+                                                <div class="col-md-10 col-9">
+                                                    <span class="text-dark">Overdue</span>
+                                                </div>
+                                                <div class="col-md-2 col-3 helpdesk-ticket-badge-col">
+                                                    <span class="badge badge-primary count ticket-total-count">
+
+                                                        <span class="my_closed_tickets">
+                                                            0
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row m-0 pb-2">
+                                                <div class="col-md-10 col-9">
+                                                    <span class="text-dark">Today</span>
+                                                </div>
+                                                <div class="col-md-2 col-3 helpdesk-ticket-badge-col">
+                                                    <span class="badge badge-danger count ticket-total-count">
+
+                                                        <span class="today_due">
+                                                            0
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row m-0 pb-2">
+                                                <div class="col-md-10 col-9">
+                                                    <span class="text-dark">Yesterday</span>
+                                                </div>
+                                                <div class="col-md-2 col-3 helpdesk-ticket-badge-col">
+                                                    <span class="badge badge-success count ticket-total-count">
+                                                        <span class="yesterday">
+                                                            0
+                                                        </span>
+
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row m-0 pb-2">
+                                                <div class="col-md-10 col-9">
+                                                    <span class="text-dark">This Week</span>
+                                                </div>
+                                                <div class="col-md-2 col-3 helpdesk-ticket-badge-col">
+                                                    <span class="badge badge-primary count ticket-total-count">
+                                                        <span class="7days">
+                                                            0
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row m-0 pb-2">
+                                                <div class="col-md-10 col-9">
+                                                    <span class="text-dark">This Month</span>
+                                                </div>
+                                                <div class="col-md-2 col-3 helpdesk-ticket-badge-col">
+                                                    <span class="badge badge-primary count ticket-total-count">
+                                                        <span class="month">
+                                                            0
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row m-0">
+                                                <div class="col-md-10 col-9">
+                                                    <span class="text-dark">This Year</span>
+                                                </div>
+                                                <div class="col-md-2 col-3 helpdesk-ticket-badge-col">
+                                                    <span class="badge badge-info count ticket-total-count">
+                                                        <span class="year">
+                                                            0
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-md-6 margin-bottom-15 priority">
+                                    <div class="card h-100 border-0 priority-tickets position-relative">
+                                        <div class="card-body text-center border-coustome overdue-priority-column">
+                                            <h4 class="card-title text-dark text-center helpdesk-cous-text">Priority</h4>
+                                            <div class="row" t-attf-class="#{show_demo ? 'o_demo' : ''}">
+
+                                                <div class="col-md-3 px-2 urgent-tickets">
+                                                    <div class="o_main o_dashboard_action" title="My urgent tickets"  t-on-click="urgent"
+                                                         name="website_axis_helpdesk_advance.helpdesk_ticket_action_urgent">
+                                                        <div class="rounded-circle background-color-helpdesk-urgent priority-ticket-count mx-auto position-relative">
+                                                            <h1 class="count position-absolute">
+                                                                <a class="text-white" href="#">
+                                                                    <span class="o_highlight my_urgent">
+                                                                        0
+                                                                    </span>
+                                                                </a>
+                                                            </h1>
+
+                                                        </div>
+                                                        <h5 class="card-text text-dark pt-3">Urgent</h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 px-2 high-priority-tickets">
+                                                    <div class="o_main o_dashboard_action" title="My High Priority tickets" t-on-click="high_priority"
+                                                         name="website_axis_helpdesk_advance.helpdesk_ticket_action_high_priorities">
+                                                        <div class="rounded-circle background-color-helpdesk-high priority-ticket-count mx-auto position-relative">
+                                                            <h1 class="count position-absolute">
+                                                                <a class="text-white" href="#">
+                                                                    <span class="o_highlight my_high">
+                                                                        0
+                                                                    </span>
+                                                                </a>
+                                                            </h1>
+
+                                                        </div>
+                                                        <h5 class="card-text text-dark pt-3">High Priority</h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 px-2 medium-tickets">
+                                                    <div class="o_main o_dashboard_action" title="My Medium Priority tickets" t-on-click="medium"
+                                                         name="website_axis_helpdesk_advance.helpdesk_ticket_action_medium_priorities">
+                                                        <div class="rounded-circle background-color-helpdesk-medium priority-ticket-count mx-auto position-relative">
+                                                            <h1 class="count position-absolute">
+                                                                <a class="text-white" href="#">
+                                                                    <span class="o_highlight my_medium">
+                                                                        0
+                                                                    </span>
+                                                                </a>
+                                                            </h1>
+
+                                                        </div>
+                                                        <h5 class="card-text text-dark pt-3">Medium</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 px-2 law-tickets">
+                                                    <div class="o_main o_dashboard_action" title="My Low Priority tickets" t-on-click="low"
+                                                         name="website_axis_helpdesk_advance.helpdesk_ticket_action_low_priorities">
+                                                        <div class="rounded-circle background-color-helpdesk-medium priority-ticket-count mx-auto position-relative">
+                                                            <h1 class="count position-absolute">
+                                                                <a class="text-white" href="#">
+                                                                    <span class="o_highlight my_low">
+                                                                        0
+                                                                    </span>
+                                                                </a>
+                                                            </h1>
+
+                                                        </div>
+                                                        <h5 class="card-text text-dark pt-3">Low</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <div class="appontment_chart_cards p-sm-3 p-2 shadow-sm text-center border rounded">
+                                    <h4 class="mb-2 text-dark">Weekly Tickets</h4>
+                                      <div class="card-body shadow">
+                                      <div class="panel">
+                                          <div class="panel-heading">
+                                          </div>
+                                          <div class="panel-body">
+                                                <canvas id="WeeklyTickets" width="500px" height="400px"/>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="appontment_chart_cards p-sm-3 p-2 shadow-sm text-center border rounded">
+                                    <h4 class="mb-2 text-dark">Monthly Tickets</h4>
+                                      <div class="card-body shadow">
+                                      <div class="panel">
+                                          <div class="panel-heading">
+                                          </div>
+                                          <div class="panel-body">
+                                                <canvas id="MonthlyTickets" width="500px" height="400px"/>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </t>
+</templates>
+
+

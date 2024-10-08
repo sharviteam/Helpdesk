@@ -1,0 +1,269 @@
+a:hover {
+text-decoration: none;
+}
+input:focus, button:focus, select:focus, .custom-select:focus {
+outline: none;
+box-shadow: none;
+
+}
+.oe_background_color.o_helpdesk_kanban {
+	background-color: #f3f6f9;
+}
+.helpdesk-ticket-dashboard {
+background-color: #f3f6f9;
+}
+.helpdesk-ticket-title-dash {
+	font-size: 32px;
+}
+.ticket-filter select.custom-select {
+background: #fff url("https://i.ibb.co/bdX5cfb/baseline-arrow-drop-down-black-18dp.png") no-repeat right .59rem;
+}
+.mb-30 {
+margin-bottom: 30px;
+}
+.open-tickets {
+background: #23bdb8;
+background: -moz-linear-gradient(-45deg, #23bdb8 0%, #43e794 100%);
+background: -webkit-linear-gradient(-45deg, #23bdb8 0%, #43e794 100%);
+background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#23bdb8', endColorstr='#43e794',GradientType=1 );
+overflow: hidden;
+}
+.pending-tickets{
+background: #f48665;
+background: -moz-linear-gradient(-45deg, #f48665 0%, #fda23f 100%);
+background: -webkit-linear-gradient(-45deg, #f48665 0%, #fda23f 100%);
+background: linear-gradient(135deg, #f48665 0%, #fda23f 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f48665', endColorstr='#fda23f',GradientType=1 );
+overflow: hidden;
+}
+.close-tickets {
+background: #f0466b;
+background: -moz-linear-gradient(-45deg, #f0466b 0%, #ef6784 100%);
+background: -webkit-linear-gradient(-45deg, #f0466b 0%, #ef6784 100%);
+background: linear-gradient(135deg, #f0466b 0%, #ef6784 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0466b', endColorstr='#ef6784',GradientType=1 );
+overflow: hidden;
+}
+.success-tickets {
+background: #e36cd9;
+background: -moz-linear-gradient(-45deg, #e36cd9 0%, #fe60ae 100%);
+background: -webkit-linear-gradient(-45deg, #e36cd9 0%, #fe60ae 100%);
+background: linear-gradient(135deg, #e36cd9 0%, #fe60ae 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e36cd9', endColorstr='#fe60ae',GradientType=1 );
+overflow: hidden;
+}
+.overdue-tickets {
+background: #fff;
+overflow: hidden;
+}
+.priority-tickets {
+background: #fff;
+overflow: hidden;
+}
+.ticket-cards .card .card-body {
+background-color: inherit !important;
+}
+.ticket-cards .card .card-body:after, .ticket-cards .card .card-body:before {
+content: "";
+position: absolute;
+background: rgba(255,255,255,0.2);
+border-radius: 50%;
+right: -50px;
+}
+.ticket-cards .card .card-body:before {
+width: 130px;
+height: 130px;
+bottom: -50px;
+}
+.ticket-cards .card .card-body:after {
+width: 85px;
+height: 85px;
+bottom: 50px;
+}
+.overdue-tickets.card .card-body:after, .overdue-tickets.card .card-body:before, .priority-tickets.card .card-body:after, .priority-tickets.card .card-body:before {
+    background: rgba(169, 169, 169, 0.3);
+}
+.ticket-cards .card {
+-webkit-transition: all 0.5s;
+transition: all 0.5s;
+}
+.ticket-cards .card:hover {
+cursor: pointer;
+    box-shadow: 0 14px 20px rgb(0 0 0 / 15%), 0 4px 5px rgb(144 144 144 / 22%);
+}
+
+.helpdesk-ticket-badge-col {
+z-index: 9;
+}
+.priority-ticket-count {
+width: 64px;
+height: 64px;
+}
+.priority-ticket-count .count {
+top: 50%;
+transform: translateY(-50%);
+right: 0;
+left: 0;
+margin: 0 auto;
+}
+.background-color-helpdesk-high {
+background-color: #ff5959;
+}
+.background-color-helpdesk-urgent {
+background-color: #f0476c;
+}
+.background-color-helpdesk-medium {
+background-color: #f39e0f;
+}
+
+.o_dashboard .oe_dashboard_column:after {
+content: "";
+display: table;
+clear: both;
+}
+.o_dashboard .oe_dashboard .oe_action {
+margin: 0 0 30px 0 !important;
+float: left;
+width: 50%;
+border: none !important;
+background-color:transparent !important;
+padding: 0 15px;
+}
+.o_dashboard .oe_dashboard .oe_action .oe_header{
+	background-color: #7c7bad;
+	color: #fff;
+}
+.o_dashboard .oe_dashboard .oe_action .oe_header .o_dashboard .oe_dashboard .oe_action .oe_content {
+background-color: #fff;
+margin: 0 15px !important;
+}
+.o_dashboard .oe_dashboard_column.ui-sortable {
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.o_dashboard .oe_dashboard .oe_action .oe_content {
+	padding: 12px;
+	background-color: #fff;
+}
+.o_dashboard .oe_dashboard .oe_action .oe_content .o_graph_canvas_container {
+	padding-top: 0;
+}
+.helpdesk-ticket-card1{
+    background-image: linear-gradient(
+45deg, #cf3f3f 0%, #f12f2f 100%);
+}
+.helpdesk-ticket-card2{
+    background-image: linear-gradient(
+45deg, #4e5aa4 0%, #263593 100%);
+}
+.helpdesk-ticket-card3{
+    background-image: linear-gradient(
+45deg, #56953e 0%, #276f24 100%);
+}
+.helpdesk-ticket-card4{
+    background-image: linear-gradient(
+45deg, #ea791c 0%, #da650a 100%);
+}
+.helpdesk-ticket-cards .opacity_icon{
+	font-size: 64px;
+    color: #fff;
+    top: 50%;
+    right: 20px;
+    opacity: 0.2;
+    max-width: 80px;
+    transform: translateY(-50%) scale(1);
+    transition: all 0.35s ease-in-out;
+}
+.helpdesk-ticket-cards .card_number_text{
+	font-size: 3rem;
+}
+.helpdesk-ticket-cards .card_up_title {
+    font-size: 1.5rem;
+}
+.helpdesk-ticket-cards .card_main_title {
+    font-size: 1rem;
+}
+.helpdesk-ticket-cards:hover {
+    box-shadow: 0 10px 15px rgb(0 0 0 / 50%);
+    transform: translateY(-2px);
+}
+.helpdesk-top-cous{
+	font-size: 2rem;
+}
+.border-coustome{
+	border: 1px solid #dee2e6 !important;
+}
+.helpdesk-cous-text{
+	padding: 5px 0;
+	background: #e6eaed;
+	border-radius: 3px;
+}
+.helpdesk-ticket-cards{
+	    margin-bottom: 30px;
+    cursor: pointer;
+    transition: all 0.35s ease-in-out;
+}
+.margin-bottom-15 {
+    margin-bottom: 15px !important;
+}
+.ticket-total-count{
+	font-size: 12px;
+}
+.overdue-priority-column{
+	padding: 10px !important;
+}
+/*Filter Tickets*/
+.filter-ticket-box-color{
+	box-shadow: 0 1px 3px 0 #0000001a,0 1px 2px 0 #0000000f;
+	border: 1px solid #f4a460;
+	margin-top: 15px;
+}
+.helpdesk-header-border tbody tr th{
+	background-color: #deeaff;
+	border-right: 1px solid #dbd3d3;
+}
+.header-show-ticket-helpdesk strong{
+	font-size: 18px;
+}
+.helpdesk-card-new{
+	padding: 10px !important;
+}
+
+.oe_website_rating_team .oe_rate{
+    clear: both;
+}
+.oe_website_rating_team .oe_rate img {
+    margin-right: 6px;
+}
+
+.oe_website_rating_team .thumbnail{
+    height: 355px;
+}
+
+html .o_web_client > .o_action_manager{
+    overflow: auto !important;
+}
+select > option {color:black;}
+
+.badge-primary {
+  color: #FFFFFF;
+  background-color: #7C7BAD;
+}
+.badge-danger {
+  color: #FFFFFF;
+  background-color: #dc3545;
+}
+.badge-success {
+  color: #FFFFFF;
+  background-color: #28a745;
+}
+.badge-info {
+  color: #FFFFFF;
+  background-color: #17a2b8;
+}

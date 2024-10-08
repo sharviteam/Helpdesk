@@ -1,0 +1,107 @@
+<odoo> 
+
+    <template id="report_invoice_adding_mrp_column" inherit_id="account.report_invoice_document">
+        
+        <xpath expr="//table/thead/tr/th[@name='th_quantity']" position="after">
+            <th name="th_mrp_price" class="text-start"><span>MRP</span></th>
+        </xpath>
+        <xpath expr="//table/tbody/t/tr/t/td[@class='text-end']" position="after">
+            <td name="td_mrp_price" class="text-start">
+                <t t-esc="line.mrp_price"/>
+            </td>
+        </xpath>
+        <xpath expr="//table/thead/tr/th[@name='th_priceunit']" position="replace">
+            <th name="th_priceunit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>TAXABLE VALUE</span></th>
+           
+
+        </xpath>
+        <xpath expr="//table/thead/tr/th[@name='th_taxes']" position="replace">
+            
+            <th name="th_taxes" t-attf-class="text-start {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>TAX%</span></th>
+
+        </xpath>
+        
+        <!-- Adding phone number after address -->
+        <xpath expr="//div[@name='address_not_same_as_shipping']//t[@t-set='address']" position="inside">
+            <div t-if="o.partner_id.phone">
+                <strong>Phone:</strong> <span t-field="o.partner_id.phone"/>
+                
+            </div>
+          
+        </xpath>
+        <xpath expr="//div[@name='address_same_as_shipping']//t[@t-set='address']" position="inside">
+            <div t-if="o.partner_id.phone">
+                <strong>Phone:</strong> <span t-field="o.partner_id.phone"/>
+            </div>
+           
+        </xpath>
+        <xpath expr="//div[@name='no_shipping']//t[@t-set='address']" position="inside">
+            <div t-if="o.partner_id.phone">
+                <strong>Phone:</strong> <span t-field="o.partner_id.phone"/>
+            </div>
+            
+        </xpath>
+        <xpath expr="//div[@name='address_not_same_as_shipping']//t[@t-set='address']" position="inside">
+            <div t-if="o.partner_id.mobile">
+                <strong>Mobile:</strong> <span t-field="o.partner_id.mobile"/>
+            </div>
+            <div t-if="o.partner_id.state_id">
+                <strong>Place Of Supply:</strong><span t-field="o.partner_id.state_id"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[@name='address_same_as_shipping']//t[@t-set='address']" position="inside">
+            <div t-if="o.partner_id.mobile">
+                <strong>Mobile:</strong> <span t-field="o.partner_id.mobile"/>
+            </div>
+             <div t-if="o.partner_id.state_id">
+                <strong>Place Of Supply:</strong><span t-field="o.partner_id.state_id"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[@name='no_shipping']//t[@t-set='address']" position="inside">
+            <div t-if="o.partner_id.mobile">
+                <strong>Mobile:</strong> <span t-field="o.partner_id.mobile"/>
+            </div>
+            <div t-if="o.partner_id.state_id">
+                <strong>Place Of Supply:</strong><span t-field="o.partner_id.state_id"/>
+            </div>
+        </xpath>
+        <!-- Adding customer lable -->
+        <xpath expr="//div[@name='address_not_same_as_shipping']//address[@t-field='o.partner_id']" position="before">
+                <strong>Customer:</strong>
+        </xpath>
+
+        <xpath expr="//div[@name='address_same_as_shipping']//address[@t-field='o.partner_id']" position="before">
+            <strong>Customer:</strong>
+        </xpath>
+
+        <xpath expr="//div[@name='no_shipping']//address[@t-field='o.partner_id']" position="before">
+            <strong>Customer:</strong>       
+        </xpath>
+        
+        <!-- Removing the Source and Reference in POS -->
+        <xpath expr="//div[@name='origin']" position="replace">
+
+        </xpath>
+
+        <xpath expr="//div[@name='reference']" position="replace">
+
+        </xpath>
+
+        <!-- changing the GSt name reversing the description & name vice versa -->
+
+        <xpath expr="//span[@id='line_tax_ids']" position="replace">
+            <span t-esc="', '.join(map(lambda x: (x.name or x.description), line.tax_ids))" id="line_tax_ids"/>
+        </xpath>
+        
+        <!-- Adding the Branch field  -->
+
+        <xpath expr="//div[@class='row']" position="before">
+            <div class="row">
+                <div class="col-6" style = "margin-top:-120px;">
+                  <h4> Branch Address:</h4>  <span t-field="o.pos_order_ids.config_id.receipt_header"/>
+                </div>
+            </div>
+         </xpath>
+   
+    </template>
+</odoo>

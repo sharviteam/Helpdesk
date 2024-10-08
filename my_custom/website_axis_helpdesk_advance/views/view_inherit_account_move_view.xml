@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+         <record id="view_account_move_ticket_inherit" model="ir.ui.view">
+        <field name="name">account.move.ticket.inherit.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='open_reconcile_view']" position="after">
+                <button type="object" name="action_view_invoice_ticket" class="oe_stat_button" icon="fa-tasks"  groups="website_axis_helpdesk_advance.group_invoice_helpdesk_ticket">
+                    <field name="ticket_count" widget="statinfo" string="Ticket" />
+                </button>
+                <button type="object" name="action_view_invoice_timesheet" class="oe_stat_button" icon="fa-tasks">
+                    <field name="inv_timesheet_count" widget="statinfo" string="Timesheet" />
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='invoice_payment_term_id']" position="after">
+             <field name="account_move_ticket_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+         </record>
+    </data>
+</odoo>

@@ -1,0 +1,396 @@
+<odoo>
+    <data>
+        <record id="axis_helpdesk_ticket_tree" model="ir.ui.view">
+        <field name="name">axis.helpdesk.ticket.tree</field>
+        <field name="model">axis.helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="number" />
+                <field name="name" />
+                <field name="partner_name" />
+                <field name="res_user_id" />
+                <field name="helpdesk_stage_id" />
+                <field name="priority" widget="priority" />
+                <field name="helpdesk_ticket_type_id" optional="hide"/>
+                <field name="create_date" readonly="1" />
+                <field name="last_stage_update" />
+            </tree>
+        </field>
+    </record>
+
+        <record id="axis_helpdesk_ticket_form" model="ir.ui.view">
+        <field name="name">axis.helpdesk.ticket.form</field>
+        <field name="model">axis.helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Helpdesk Ticket">
+                <header>
+                    <button
+                        string="Assign to me"
+                        name="assign_to_me"
+                        type="object"
+                        invisible="res_user_id"
+                    />
+
+                    <button name="close_action" string="Set to Close" type="object" class="oe_highlight" invisible="is_ticket_closed"/>
+                    <field
+                        name="helpdesk_stage_id"
+                        widget="statusbar"
+                        options="{'clickable': '1', 'fold_field': 'folded_kanban'}"
+                    />
+                    <button name="create_invoice_move" string="Create Invoice" type="object" class="oe_highlight" groups="website_axis_helpdesk_advance.group_invoice_helpdesk_ticket"/>
+                    <button name="create_sale_order" string="Create Sale Order" type="object" class="oe_highlight" groups="website_axis_helpdesk_advance.group_sale_helpdesk_ticket"/>
+                    <button name="create_purchase_order" string="Create Purchase Order" type="object" class="oe_highlight" groups="website_axis_helpdesk_advance.group_purchase_helpdesk_ticket"/>
+                    <button name="create_crm_lead" string="Create Crm Lead" type="object" class="oe_highlight" groups="website_axis_helpdesk_advance.group_crm_helpdesk_ticket"/>
+                    <button name="send_whatsapp_msg" string="Send By Whatsapp Direct" type="object"  groups="website_axis_helpdesk_advance.group_whatsapp" class="oe_stat_button" icon="fa-whatsapp" style="background-color:#4FCE5D;font-weight:bold;"/>
+                </header>
+                <sheet>
+		<div class="oe_button_box" name="button_box">
+                        <button name="action_get_attachment_tree_view" class="oe_stat_button" icon="fa-book"
+                            type="object" invisible="ticket_attach__no">
+                            <field name="ticket_attach__no" widget="statinfo" string="Documents"/>
+                        </button>
+                          <button string="Create Task" type="object" name="create_task" icon="fa-pencil-square-o" class="oe_start_button" invisible="is_task">
+                            <field name="is_task" invisible="1" />
+                        </button>
+                         <button name="task_action" type="object" string="Task" class="oe_start_button task_button" icon="fa-pencil-square" invisible="is_task">
+                            <field name="is_task_button" invisible="1"/>
+                        </button>
+                        <button type="object" name="action_view_invoice" class="oe_stat_button" icon="fa-tasks"  groups="website_axis_helpdesk_advance.group_invoice_helpdesk_ticket">
+                        <field name="invoice_count" widget="statinfo" string="Invoice" />
+                        </button>
+
+                        <button type="object" name="action_view_sale" class="oe_stat_button" icon="fa-tasks"  groups="website_axis_helpdesk_advance.group_sale_helpdesk_ticket">
+                        <field name="sale_count" widget="statinfo" string="Sale" />
+                        </button>
+
+                        <button type="object" name="action_view_purchase" class="oe_stat_button" icon="fa-tasks"  groups="website_axis_helpdesk_advance.group_purchase_helpdesk_ticket">
+                        <field name="purchase_count" widget="statinfo" string="Purchase" />
+                        </button>
+                        <button type="object" name="action_view_crm" class="oe_stat_button" icon="fa-tasks"  groups="website_axis_helpdesk_advance.group_crm_helpdesk_ticket">
+                        <field name="crm_count" widget="statinfo" string="CRM Lead" />
+                        </button>
+                        <field name="is_merge" invisible="1"/>
+                        <button type="object" name="action_view_tickets" class="oe_stat_button" icon="fa-pencil-square" invisible="is_merge">
+                        <field name="ticket_count" widget="statinfo" string="Merged Tickets" />
+                        </button>
+
+
+                         <button name ="toggle_active" type="object" class="oe_highlight" string="Archive" icon="fa-archive">
+                    <field name="active" widget="boolean_button" invisible="1"/>
+                         </button>
+		</div>
+
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="active"
+                    />
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <h1 class="oe_title">
+                            <field name="number" />
+                        </h1>
+                        <h2 class="o_row">
+                            <field name="name" />
+                        </h2>
+                        <br/>
+                        <field name="helpdesk_sla_state" widget="many2many_tags" options="{'color_field': 'color'}" readonly="1" groups="website_axis_helpdesk_advance.group_use_sla"/>
+                    </div>
+                    <group name="main">
+                        <group>
+                            <field name="active" invisible="1" />
+                            <field name="based_on_ticket_type"/>
+                            <field name="helpdesk_ticket_type_id" invisible="based_on_ticket_type"/>
+                            <field name="helpdesk_team_id"/>
+                            <field name="domain_user_ids" invisible="1"/>
+                            <field name="client_id"/>
+                            <field name="res_user_id" class="field_user_id" domain="['&amp;', ('id', 'in', domain_user_ids), ('share', '=', False)]" widget="many2one_avatar_user"/>
+                            <field name="user_ids" invisible="1" readonly="1" />
+                            <field name="priority" widget="priority" />
+                            <field
+                                name="company_id"
+                                options="{'no_create': True}"
+                                groups="base.group_multi_company"
+                            />
+                            <field name="create_date"/>
+                            <field name="ticket_deadline"/>
+                            <field name="esitmated_hours"/>
+                            <field name="ticket_channel_helpdesk_id" />
+                            <field name="team_sla" invisible="1" />
+                            <field name="helpdesk_sla_deadline" invisible="team_sla"/>
+                        </group>
+                        <group>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="project_project_id"/>
+                            <field name="partner_id" />
+                            <field name="partner_name" />
+                            <field name="partner_email" />
+                             <field name="is_ticket_closed" invisible="1"/>
+                             <field name="close_ticket_date"  invisible="is_ticket_closed" />
+                            <field name="attachment_ids" widget="many2many_tags"  options="{'editable': True}"/>
+                            <field name="product_boolean" invisible="1"/>
+                             <field name="product_ids" widget="many2many_tags"  invisible="product_boolean"/>
+<!--                            <field name="category_id" />-->
+<!--                            <field-->
+<!--                                name="tag_ids"-->
+<!--                                widget="many2many_tags"-->
+<!--                                options="{'no_create_edit': True}"-->
+<!--                            />-->
+                        </group>
+                    </group>                   
+                        <notebook>
+                            <page string="Description" name="description">
+                                <field name="description" widget="html" />
+                            </page>
+                            <page string="Other Information" name="other_info">
+                                <group>
+                                    <field name="last_stage_update" readonly="1" />
+                                    <field name="assigned_date" readonly="1" />
+                                    <field name="closed_date" readonly="1" />
+                                </group>
+                            </page>
+                             <page string="Timesheet" invisible="is_task" >
+                            <field name="ticket_timesheet_ids"/>
+                        </page>
+
+                             <page string="Customer Rating"  groups='website_axis_helpdesk_advance.group_helpdesk_ticket_admin' >
+                            <group>
+                            <field name="priority_new"  widget="priority"/>
+                            <field name="comment"/>
+                        </group>
+                        </page>
+                        <page string="Merged Tickets">
+                            <field name="ticket_ids"/>
+<!--                            <tree>-->
+<!--                                <field name="ticket_id"/>-->
+<!--                            </tree>-->
+                        </page>
+                        </notebook>
+                   
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field
+                        name="message_ids"
+                        widget="mail_thread"
+                        options="{'post_refresh': 'recipients', 'open_attachments': True}"
+                    />
+                </div>
+            </form>
+        </field>
+        </record>
+            <record id="helpdesk_tickets_view_search" model="ir.ui.view">
+        <field name="name">axis.helpdesk.ticket.search</field>
+        <field name="model">axis.helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <search string="Tickets Search">
+                <field name="name"/>
+                <field name="id" string="Ticket ID"/>
+                <field name="tag_ids"/>
+                <field name="helpdesk_team_id"/>
+                <field name="res_user_id"/>
+                <field name="partner_id"/>
+                <field name="priority" invisible="1"/>
+                <field name="helpdesk_sla_deadline" groups="website_axis_helpdesk_advance.group_use_sla"/>
+
+                <filter string="My Tickets" domain="['|',('res_user_id','=',uid),('client_id','=',uid)]" name="my_ticket"/>
+                <filter string="Unassigned" domain="[('res_user_id','=',False)]" name="unassigned"/>
+                <separator/>
+                <filter string="Open" domain="[('helpdesk_stage_id.is_close','=',False)]" name="is_open"/>
+                <filter string="Urgent Priority" domain="[('priority','=',3)]" name="urgent_priority"/>
+                 <filter string="High Priority" domain="[('priority','=',2)]" name="high_priority"/>
+                  <filter string="Medium Priority" domain="[('priority','=',1)]" name="medium_priority"/>
+                   <filter string="Low Priority" domain="[('priority','=',0)]" name="low_priority"/>
+
+
+                <separator/>
+                 <filter string="Closed Tickets" domain="[('is_ticket_closed','=',True)]" name="is_closed"/>
+                <filter string="Unread Messages" domain="[('message_needaction','=',True)]" name="message_needaction"/>
+                <separator/>
+                <filter string="Creation Date" date="create_date" name="creation_date"/>
+                <filter string="Customer Replied" domain="[('is_customer_replied','=',True)]" name="is_customer_replied"/>
+                <separator/>
+                <filter invisible="1" string="Late Activities" name="activities_overdue"
+                    domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                    help="Show all records which has next action date is before today"/>
+                <filter invisible="1" string="Today Activities" name="activities_today"
+                    domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
+                        domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
+                        ]"/>
+                <separator/>
+                <filter string="Upcoming SLA Fail" domain="[('helpdesk_sla_deadline','!=',False),('helpdesk_sla_deadline', '&lt;=', (datetime.date.today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]" name="upcoming_ticket_sla_policy_fail" groups="website_axis_helpdesk_advance.group_use_sla"/>
+                <filter string="SLA Failed" domain="[('ticket_sla_policy_fail','=', True)]" name="ticket_sla_policy_failed" groups="website_axis_helpdesk_advance.group_use_sla"/>
+                <separator/>
+                <filter string="Archived" domain="[('active','=',False)]" name="archive"/>
+                <group expand="0" string="Group By">
+                    <filter string="Assigned to" name="assignee" context="{'group_by':'res_user_id'}"/>
+                    <filter string="Team" name="team" context="{'group_by':'helpdesk_team_id'}"/>
+                    <filter string="Ticket Type" name="helpdesk_ticket_type_id" context="{'group_by':'helpdesk_ticket_type_id'}"/>
+                    <filter string="Stage" name="stage" context="{'group_by':'helpdesk_stage_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+        <record id="helpdesk_ticket_view_calendar_analysis" model="ir.ui.view">
+        <field name="name">axis.helpdesk.ticket.calendar.analysis</field>
+        <field name="model">axis.helpdesk.ticket</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <calendar string="Helpdesk_calendar" date_start="create_date"
+                event_open_popup="true"
+                color="partner_id">
+                <field name="name"/>
+                <field name="number"/>
+                <field name="partner_id"/>
+            </calendar>
+        </field>
+    </record>
+        <record id="helpdesk_ticket_view_kanban" model="ir.ui.view">
+        <field name="name">axis.helpdesk.ticket.kanban</field>
+        <field name="model">axis.helpdesk.ticket</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="helpdesk_stage_id" class="o_kanban_small_column o_kanban_helpdesk_ticket" quick_create_view="website_axis_helpdesk_advance.quick_create_ticket_form">
+                <field name="helpdesk_stage_id" options='{"group_by_tooltip": {"description": "Stage Description"}}'/>
+                <field name="res_user_id"/>
+                <field name="color"/>
+                <field name="priority"/>
+                <field name="ticket_sla_policy_fail"/>
+                <field name="tag_ids"/>
+                <field name="active"/>
+                <field name="activity_ids"/>
+                <field name="activity_state"/>
+                <field name="helpdesk_team_id"/>
+                <field name="helpdesk_ticket_blocked"/>
+                <field name="helpdesk_ticket_normal"/>
+                <field name="helpdesk_ticket_done"/>
+                <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''} oe_kanban_global_click">
+                            <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
+                            <div class="o_dropdown_kanban dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <a name="%(portal.portal_share_action)d" type="action" class="dropdown-item" role="menuitem">Share</a>
+                                    <t t-if="widget.editable"><a type="edit" class="dropdown-item" role="menuitem">Edit</a></t>
+                                    <t t-if="widget.deletable"><a type="delete" class="dropdown-item" role="menuitem">Delete</a></t>
+                                    <a name="toggle_active" type="object" class="dropdown-item" role="menuitem" t-if="! record.active.value">Restore</a>
+                                    <a name="toggle_active" type="object" class="dropdown-item" role="menuitem" t-if="record.active.value">Archive</a>
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div>
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                </div>
+                                <div>
+                                    <strong><field name="name"/> (#<field name="id"/>)</strong>
+                                </div>
+                                <div>
+                                    <field name="partner_id"/>
+                                </div>
+                                <div t-if="record.helpdesk_sla_deadline.raw_value">
+                                    <t t-if="new Date(record.helpdesk_sla_deadline.raw_value) &lt; (new Date())" t-set="red" t-value="'oe_kanban_text_red'"/>
+                                    <span class="fa fa-clock-o" title="Deadline" role="img" aria-label="Deadline"/>
+                                    <span t-attf-class="{{red}}">
+                                        <field name="helpdesk_sla_deadline" widget="remaining_days"/>
+                                    </span>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="priority" widget="priority"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                        <field name="helpdesk_ticket_state" widget="state_selection" groups="base.group_user"/>
+                                        <field name="res_user_id" widget="many2one_avatar_user"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+        <record id="helpdesk_ticket_view_kanban_no_create" model="ir.ui.view">
+        <field name="name">axis.helpdesk.ticket.kanban.no.create</field>
+        <field name="model">axis.helpdesk.ticket</field>
+        <field name="priority">100</field>
+        <field name="inherit_id" ref="website_axis_helpdesk_advance.helpdesk_ticket_view_kanban"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban[hasclass('o_kanban_small_column')]" position="attributes">
+                <attribute name="create">0</attribute>
+                <attribute name="group_create">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+        <record id="axis_helpdesk_ticket_action" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">axis.helpdesk.ticket</field>
+        <field name="view_mode">tree,kanban,form,pivot</field>
+        </record>
+
+       <record id="helpdesk_ticket_action_main" model="ir.actions.act_window">
+        <field name="name">All Tickets</field>
+        <field name="res_model">axis.helpdesk.ticket</field>
+        <field name="view_mode">kanban,tree,form,activity,graph</field>
+        <field name="search_view_id" ref="helpdesk_tickets_view_search"/>
+        <field name="view_id" ref="website_axis_helpdesk_advance.helpdesk_ticket_view_kanban_no_create"/>
+        <field name="context">{'search_default_my_ticket': True, 'search_default_is_open': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first ticket.
+            </p>
+            <p>To get things done, use activities and status on tickets.
+                <br/>
+                Chat in real time or by email to collaborate efficiently.
+            </p>
+        </field>
+    </record>
+
+        <record id="action_helpdesk_ticket_my" model="ir.actions.act_window">
+        <field name="name">My Tickets</field>
+        <field name="res_model">axis.helpdesk.ticket</field>
+        <field name="view_mode">list,kanban,form,activity,calendar,pivot,graph</field>
+        <field name="search_view_id" ref="helpdesk_tickets_view_search"/>
+        <field name="context">{'search_default_my_ticket': True, 'search_default_is_open': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No tickets found. Let's create one!
+                </p><p>To get things done, use activities and status on tickets. <br/>
+                Chat in real time or by email to collaborate efficiently.
+            </p>
+        </field>
+    </record>
+
+    <record id="axis_helpdesk_closed_ticket" model="ir.actions.act_window">
+        <field name="name"> Closed Tickets</field>
+        <field name="res_model">axis.helpdesk.ticket</field>
+        <field name="view_mode">list,kanban,form,activity,calendar,graph,pivot</field>
+        <field name="domain">[('is_ticket_closed', '=', True)]</field>
+        <field name="context">{'search_default_is_ticket_closed': True}</field>
+    </record>
+
+         <menuitem id="axis_helpdesk_ticket_menu" name="Tickets" parent="main_menu_helpdesk_ticket"  sequence="10"/>
+        <menuitem id="helpdesk_ticket_menu_all" name="All Tickets" action="helpdesk_ticket_action_main"
+        sequence="20" parent="axis_helpdesk_ticket_menu"/>
+         <menuitem id="axis_helpdesk_my_ticket_menu" name="My Tickets" parent="axis_helpdesk_ticket_menu" action="action_helpdesk_ticket_my" sequence="10"/>
+        <menuitem id="helpdesk_ticket_menu_close" name="Closed Tickets" action="axis_helpdesk_closed_ticket"
+        sequence="30" parent="axis_helpdesk_ticket_menu"/>
+
+    </data>
+</odoo>

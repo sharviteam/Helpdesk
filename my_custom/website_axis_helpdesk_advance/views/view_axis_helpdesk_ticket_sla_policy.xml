@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="axis_helpdesk_ticket_sla_policy_tree">
+            <field name="name">axis.helpdesk.ticket.sla.policy.tree</field>
+            <field name="model">axis.helpdesk.ticket.sla.policy</field>
+            <field name="arch" type="xml">
+                <tree string="Helpdesk SLA">
+                    <field name="name" />
+<!--                    <field name="helpdesk_stage_id" />-->
+                    <field name="time_minutes" />
+                    <field name="days" />
+                    <field name="hours" />
+                    <field name="note" />
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="axis_helpdesk_ticket_sla_policy_form">
+            <field name="name">axis.helpdesk.ticket.sla.policy.form</field>
+            <field name="model">axis.helpdesk.ticket.sla.policy</field>
+            <field name="arch" type="xml">
+                <form string="Helpdesk SLA">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <separator colspan="2" string="Apply on" />
+<!--                                <field-->
+<!--                                    name="helpdesk_team_ids"-->
+<!--                                    domain="[('use_sla', '=', True)]"-->
+<!--                                    widget="many2many_tags"-->
+<!--                                />-->
+<!--                                <field name="helpdesk_stage_id"/>-->
+                                <field name="team_id" domain="[('use_sla', '=', True)]" />
+                                <field name="priority" widget="priority"/>
+                                <field name="ticket_type_id" widget="selection"/>
+                                <field name="tag_ids" widget="many2many_tags"/>
+<!--                                <field name="helpdesk_stage_id" string="Reach Stage" />-->
+                                <separator colspan="2" string="Target" class="mt32"/>
+<!--                            <field name="helpdesk_stage_id" string="Reach Stage" domain="[('team_ids', '=', team_id)]"/>-->
+                            <label for="days" string="Reach In"/>
+                                <div class="o_row">
+                                    <field name="days" /> days<br />
+                                    <field name="hours" /> hours<br />
+                                    <field name="time_minutes" /> minutes<br />
+                                </div>
+                            </group>
+                        </group>
+                        <field name="note" placeholder="Description of the policy..." />
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_axis_helpdesk_ticket_sla_policy" model="ir.actions.act_window">
+            <field name="name">Helpdesk SLA</field>
+            <field name="res_model">axis.helpdesk.ticket.sla.policy</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            id="axis_helpdesk_ticket_sla_policy_menu"
+            name="SLA Policy"
+            parent="helpdesk_ticket_configuration"
+            action="action_axis_helpdesk_ticket_sla_policy"
+            sequence="9"
+        />
+    </data>
+</odoo>

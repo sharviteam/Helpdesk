@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="axis_helpdesk_ticket_type_software" model="axis.helpdesk.ticket.type">
+        <field name="name">Software</field>
+    </record>
+
+    <record id="axis_helpdesk_ticket_type_updation" model="axis.helpdesk.ticket.type">
+        <field name="name">Update</field>
+    </record>
+    
+    <record id="helpdesk_ticket_tag_crm" model="axis.helpdesk.ticket.tag">
+        <field name="name">CRM</field>
+    </record>
+
+    <record id="helpdesk_ticket_tag_website" model="axis.helpdesk.ticket.tag">
+        <field name="name">Website</field>
+    </record>
+
+    <record id="helpdesk_ticket_tag_service" model="axis.helpdesk.ticket.tag">
+        <field name="name">Service</field>
+    </record>
+
+    <record id="helpdesk_ticket_tag_repair" model="axis.helpdesk.ticket.tag">
+        <field name="name">Repair</field>
+    </record>
+    
+    <record id="helpdesk_sla_2_days_start" model="axis.helpdesk.ticket.sla.policy">
+        <field name="name">2 days to start</field>
+        <field name="team_id" ref="axis_helpdesk_ticket_customer_team"/>
+        <field name="helpdesk_stage_id" ref="axis_helpdesk_stage_inprogress"/>
+        <field name="days">2</field>
+    </record>
+
+    <record id="helpdesk_sla_7_days_finish" model="axis.helpdesk.ticket.sla.policy">
+        <field name="name">7 days to finish</field>
+        <field name="team_id" ref="axis_helpdesk_ticket_customer_team"/>
+        <field name="helpdesk_stage_id" ref="axis_helpdesk_stage_solved"/>
+        <field name="days">7</field>
+    </record>
+
+    <record id="model_helpdesk_ticket_action_share" model="ir.actions.server">
+        <field name="name">Share</field>
+        <field name="model_id" ref="website_axis_helpdesk_advance.model_axis_helpdesk_ticket"/>
+        <field name="binding_model_id" ref="website_axis_helpdesk_advance.model_axis_helpdesk_ticket"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_share()</field>
+    </record>
+
+    <record id="helpdesk_ticket_1" model="axis.helpdesk.ticket">
+        <field name="name">Kitchen collapsing</field>
+        <field name="res_user_id" ref="base.user_admin"/>
+        <field name="priority">3</field>
+        <field name="partner_id" ref="base.res_partner_12"/>
+        <field name="helpdesk_stage_id" ref="website_axis_helpdesk_advance.axis_helpdesk_stage_inprogress"/>
+        <field name="description">Kitchen Collapsing Description</field>
+    </record>
+    <record id="helpdesk_ticket_2" model="axis.helpdesk.ticket">
+        <field name="name">Where can I download a catalog ?</field>
+        <field name="priority">0</field>
+        <field name="partner_id" ref="base.res_partner_4"/>
+        <field name="helpdesk_ticket_type_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_type_software"/>
+        <field name="description">Download catelog</field>
+    </record>
+    <record id="helpdesk_ticket_3" model="axis.helpdesk.ticket">
+        <field name="name">Warranty</field>
+        <field name="helpdesk_team_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_customer_team"/>
+        <field name="res_user_id" ref="base.user_admin"/>
+        <field name="helpdesk_ticket_type_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_type_software"/>
+        <field name="priority">2</field>
+        <field name="partner_id" ref="base.res_partner_main1" />
+        <field name="helpdesk_stage_id" ref="website_axis_helpdesk_advance.axis_helpdesk_stage_new"/>
+        <field name="description">
+Hello,
+
+I would like to know what kind of warranties you are offering for your products.
+
+Here is my contact number: 123456789
+
+Thank you,
+Chester Reed
+        </field>
+    </record>
+    <!-- fail the sla status -->
+    <function model="helpdesk.sla.status" name="write">
+        <value model="axis.helpdesk.ticket" eval="obj().search([('id', '=', ref('website_axis_helpdesk_advance.helpdesk_ticket_3'))]).helpdesk_sla_state.ids"/>
+        <value eval="{'deadline': DateTime.now() - relativedelta(days=2)}"/>
+    </function>
+
+    <record id="helpdesk_ticket_4" model="axis.helpdesk.ticket">
+        <field name="name">Wood Treatment</field>
+        <field name="helpdesk_team_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_customer_team"/>
+        <field name="res_user_id" ref="base.user_demo"/>
+        <field name="helpdesk_ticket_type_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_type_software"/>
+        <field name="partner_id" ref="base.res_partner_4" />
+        <field name="helpdesk_stage_id" ref="website_axis_helpdesk_advance.axis_helpdesk_stage_inprogress"/>
+        <field name="description">
+Hello,
+
+Is the wood from your furniture treated with a particular product? What would you recommend to maintain the quality of a dining table?
+
+Your assistance would be greatly appreciated.
+
+Thanks in Advance,
+Azure Interior
+        </field>
+    </record>
+    <record id="helpdesk_ticket_5" model="axis.helpdesk.ticket">
+        <field name="name">Chair dimensions</field>
+        <field name="helpdesk_team_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_customer_team"/>
+        <field name="res_user_id" ref="base.user_admin"/>
+        <field name="helpdesk_ticket_type_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_type_software"/>
+        <field name="partner_id" ref="base.res_partner_12"/>
+        <field name="helpdesk_stage_id" ref="website_axis_helpdesk_advance.axis_helpdesk_stage_solved"/>
+        <field name="description">
+Can you please tell me the dimensions of your “Office chair Black”? Also I am unable to find the information on your official site.
+
+I look forward to your kind response.
+
+Thank you!
+        </field>
+    </record>
+    <record id="helpdesk_ticket_6" model="axis.helpdesk.ticket">
+        <field name="name">Lost key</field>
+        <field name="helpdesk_team_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_customer_team"/>
+        <field name="res_user_id" ref="base.user_admin"/>
+        <field name="helpdesk_ticket_type_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_type_software"/>
+        <field name="partner_id" ref="base.res_partner_3"/>
+        <field name="helpdesk_stage_id" ref="website_axis_helpdesk_advance.axis_helpdesk_stage_inprogress"/>
+        <field name="description">
+Hello,
+
+I bought a locker a few years ago and I, unfortunately, lost the key. I cannot retrieve the documents I had left in there without damaging the furniture item. What solution do you offer?
+
+Thanks in advance for your help.
+Kind regards,
+Gemini Furniture
+        </field>
+    </record>
+    <record id="helpdesk_ticket_7" model="axis.helpdesk.ticket">
+        <field name="name">Furniture delivery</field>
+        <field name="helpdesk_team_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_customer_team"/>
+        <field name="res_user_id" ref="base.user_admin"/>
+        <field name="helpdesk_ticket_type_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_type_software"/>
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="helpdesk_stage_id" ref="website_axis_helpdesk_advance.axis_helpdesk_stage_cancelled"/>
+        <field name="description">
+Hi,
+
+I was wondering if you were delivering the furniture or if we needed to pick it up at your warehouse?
+If you do take care of the delivery, are there any extra costs?
+
+Regards,
+Deco Addict
+        </field>
+    </record>
+    <record id="helpdesk_ticket_8" model="axis.helpdesk.ticket">
+        <field name="name">Cabinets in kit</field>
+        <field name="helpdesk_team_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_customer_team"/>
+        <field name="res_user_id" ref="base.user_admin"/>
+        <field name="helpdesk_ticket_type_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_type_software"/>
+        <field name="partner_id" ref="base.res_partner_10"/>
+        <field name="helpdesk_stage_id" ref="website_axis_helpdesk_advance.axis_helpdesk_stage_new"/>
+        <field name="description">
+Hello,
+
+I would like to know if your cabinets come in a kit? They seem quite large and I am not sure they will fit through my front door.
+
+Thank you for your help.
+Best regards,
+Jackson Group
+        </field>
+    </record>
+    <record id="helpdesk_ticket_9" model="axis.helpdesk.ticket">
+        <field name="name">Missing user manual</field>
+        <field name="helpdesk_team_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_customer_team"/>
+        <field name="res_user_id" ref="base.user_admin"/>
+        <field name="helpdesk_ticket_type_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_type_software"/>
+        <field name="partner_id" ref="base.res_partner_12"/>
+        <field name="helpdesk_stage_id" ref="website_axis_helpdesk_advance.axis_helpdesk_stage_new"/>
+        <field name="description">
+Hello,
+
+I recently purchased one of your wardrobes in a kit. Unfortunately, I didn’t receive the user manual, so I cannot assemble the item. Could you send me this document?
+
+Thank you.
+Kind regards,
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report
+        string="Ticket Report"
+        id="report_ticket_card"
+        model="axis.helpdesk.ticket"
+        report_type="qweb-pdf"
+        name="website_axis_helpdesk_advance.report_ticket"
+        file="website_axis_helpdesk_advance.report_ticket"
+     />
+
+</odoo>

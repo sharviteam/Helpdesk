@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="axis_helpdesk_ticket_tag_tree" model="ir.ui.view">
+            <field name="name">axis.helpdesk.ticket.tag.tree</field>
+            <field name="model">axis.helpdesk.ticket.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Helpdesk Ticket Tags">
+                    <field name="name" />
+                    <field name="color" widget="color_picker" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="axis_helpdesk_ticket_tag_form" model="ir.ui.view">
+            <field name="name">axis.helpdesk.ticket.tag.form</field>
+            <field name="model">axis.helpdesk.ticket.tag</field>
+            <field name="arch" type="xml">
+                <form string="Helpdesk Ticket Tags">
+                    <header>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" />
+                        <widget
+                            name="web_ribbon"
+                            title="Archived"
+                            bg_color="bg-danger"
+                            invisible="active"
+                        />
+                        <field name="active" invisible="1" />
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" required="1" />
+                            </h1>
+                        </div>
+                        <group name="main">
+                            <field name="color" placeholder="Input From 1 to 10 digit" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="axis_helpdesk_ticket_tag_search" model="ir.ui.view">
+            <field name="name">axis.helpdesk.ticket.tag.search</field>
+            <field name="model">axis.helpdesk.ticket.tag</field>
+            <field name="arch" type="xml">
+                <search string="Helpdesk Ticket Tag Search">
+                    <filter
+                        string="Archived"
+                        name="inactive"
+                        domain="[('active','=',False)]"
+                    />
+                    <separator />
+                    <field name="name" filter_domain="[('name', 'ilike', self)]" />
+                </search>
+            </field>
+        </record>
+
+        <record id="axis_helpdesk_ticket_tag_action" model="ir.actions.act_window">
+            <field name="name">Ticket Tags</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">axis.helpdesk.ticket.tag</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="axis_helpdesk_ticket_tag_menu" name="Ticket Tags" parent="helpdesk_ticket_configuration" action="axis_helpdesk_ticket_tag_action" sequence="45"/>
+
+    </data>
+</odoo>

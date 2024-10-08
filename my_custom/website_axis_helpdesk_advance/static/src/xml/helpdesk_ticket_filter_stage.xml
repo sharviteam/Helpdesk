@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="website_axis_helpdesk_advance.TemplateDashboard">
+        <div class="helpdesk-ticket-dashboard w-100">
+            <t t-set="user" t-value="values['user_id']"/>
+            <t t-set="team" t-value="values['team_id']"/>
+            <t t-set="type" t-value="values['ticket_type_id']"/>
+            <t t-set="assignUser" t-value="values['assingUser_id']"/>
+            <t t-set="stage_config" t-value="values['stage_config']"/>
+            <t t-set="stage_count" t-value="values['stage_count']"/>
+            <t t-set="ticket_stage" t-value="values['ticket_stage_id']"/>
+            <t t-set="ticket_id" t-value="values['ticket_ids']"/>
+            <t t-set="cuurent_date" t-value="values['cuurent_date']"/>
+            <div class="w-100">
+<!--                <div class="row mx-4">-->
+                <div class="row mx-4">
+                    <div class="col-sm-2">
+                    <div style="margin-right: 10px;">
+                        <h2>Filter Option :</h2>
+                    </div>
+                    </div>
+                    <div class="col-sm-2">
+                    <div style="margin-right:10px;">
+
+                        <select class="o_team form-control btn-primary"
+                                t-att-name="prefix" t-on-change="onChangeTeamLead">
+                            <option disabled="1" selected="1" value="">Team</option>
+                            <t t-foreach='team' t-as='t' t-key="key1">
+                                <t t-esc="t['name']"/>
+                                <option t-att-value="t['id']">
+                                    <t t-esc="t['name']"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div style="margin-right:10px;">
+                            <select class="o_type form-control btn-primary"
+                                    t-att-name="prefix" t-on-change="onChangeTeamLead">
+                                <option disabled="1" selected="1" value="">Type</option>
+                                <t t-foreach='type' t-as='t' t-key="key2">
+                                    <option t-att-value="t['id']">
+                                       <t t-esc="t['name']"/>
+                                    </option>
+                                </t>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                    <div style="margin-right:10px;">
+                        <select class="o_assign form-control btn-primary"
+                                t-att-name="prefix" t-on-change="onChangeTeamLead">
+                            <option disabled="1" selected="1" value="">Assign User
+                            </option>
+                            <t t-foreach='assignUser' t-as='au' t-key="key3">
+                                <option t-att-value="au['id']">
+                                    <t t-esc="au['name']"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col-sm-2">
+                    <div style="margin-right:10px;">
+                        <select class="form-control btn-primary" id="date_filter"
+                                t-att-name="prefix" t-on-change="onChangeTeamLead">
+                            <option disabled="1" selected="1" value="">Select Date
+                            </option>
+                            <option t-att-value="1">Today</option>
+                            <option t-att-value="2">Yesterday</option>
+                            <option t-att-value="3">Current Week</option>
+                            <option t-att-value="4">Previous Week</option>
+                            <option t-att-value="5">Current Month</option>
+                            <option t-att-value="6">Previous Month</option>
+                            <option t-att-value="7">Current Year</option>
+                            <option t-att-value="8">Previous Year</option>
+                            <option t-att-value="9" class="custom_display">Custom</option>
+                        </select>
+                    </div>
+                    <div class="datepicker " style="display:none;">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown">
+                            Custom Date
+                        </button>
+                        <div class="dropdown-menu row btn-primary" aria-labelledby="dropdownMenuButton">
+                            <span>
+                                <strong>Select Date:</strong>
+                                <input class="custom_selection" type="date" name="Date" t-att-max="cuurent_date"/>
+                            </span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="ticket-cards pt-4">
+
+                    <div class="row mx-0">
+<!--                            <t t-if="not stage_config">-->
+<!--                                <h3>Set First Stages in Configuration. Helpdesk -> Configuration -> Settings -> Dashboard Filter. </h3>-->
+<!--                            </t>-->
+                            <t t-foreach="values['stage_config']" t-as="stage" t-key="key4">
+                                <t t-if="stage['name'] == 'New'">
+                                    <div class="col-md-3 mb-1">
+                                        <div class="card h-100 border-0 open-tickets position-relative">
+                                            <div class="o_main o_dashboard_action" title="My All tickets" name="website_axis_helpdesk_advance.helpdesk_all_ticket_action_main">
+                                                <div class="card-body card-cou-p">
+                                                    <h4 class="card-title text-white text-center"><t t-esc="stage['name']"/></h4>
+                                                    <div class="row">
+        <!--                                                <t t-if="stage['name'] == 'New'">-->
+                                                        <div class="col-md-4">
+                                                            <img class="img-fluid ticket-img"
+                                                             src="/website_axis_helpdesk_advance/static/src/img/open-tickets-img11.png" width="80"/>
+                                                        </div>
+
+
+                                                        <div class="col-xl-6 col-md-8">
+                                                            <a class="text-white">
+                                                                <h2 class="card-text ticket-title text-white" id="count_no">
+                                                                    <t t-foreach="values['stage_count']" t-as="count_val" t-key="key5">
+                                                                        <t t-if="count_val['stage_id'] == stage['name']">
+                                                                           <t t-esc="count_val['stage_count']"/>
+                                                                        </t>
+                                                                    </t>
+                                                                </h2>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="stage['name'] == 'In Progress'">
+                                    <div class="col-md-3 mb-1">
+                                        <div class="card h-100 border-0 pending-tickets position-relative">
+                                            <div class="o_main o_dashboard_action" title="My Pending tickets"
+                                                 name="website_axis_helpdesk_advance.helpdesk_ticket_action_main">
+                                                <div class="card-body">
+                                                    <h4 class="card-title text-white text-center">In Progress</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img class="img-fluid ticket-img"
+                                                                 src="/website_axis_helpdesk_advance/static/src/img/pending-tickets-img1.png" width="80"/>
+                                                        </div>
+                                                        <div class="col-xl-6 col-md-8">
+                                                            <a class="text-white">
+                                                                <h2 class="card-text ticket-title text-white" id="count_no">
+                                                                    <t t-foreach="values['stage_count']" t-as="count_val" t-key="key6">
+                                                                        <t t-if="count_val['stage_id'] == stage['name']">
+                                                                           <t t-esc="count_val['stage_count']"/>
+                                                                        </t>
+                                                                    </t>
+                                                                </h2>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="stage['name'] == 'Solved'">
+                                    <div class="col-md-3 mb-1">
+                                        <div class="card h-100 border-0 success-tickets position-relative">
+                                            <div class="o_main o_dashboard_action" title="My Closed tickets"
+                                                 name="website_axis_helpdesk_advance.helpdesk_all_closed_ticket_action_main">
+                                                <div class="card-body">
+                                                    <h4 class="card-title text-white text-center">Solved</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img class="img-fluid ticket-img"
+                                                                 src="/website_axis_helpdesk_advance/static/src/img/close-tickets-img1.png" width="80"/>
+                                                        </div>
+                                                        <div class="col-xl-6 col-md-8">
+                                                            <a class="text-white">
+                                                                <h2 class="card-text ticket-title text-white" id="count_no">
+                                                                    <t t-foreach="values['stage_count']" t-as="count_val" t-key="key7">
+                                                                        <t t-if="count_val['stage_id'] == stage['name']">
+                                                                           <t t-esc="count_val['stage_count']"/>
+                                                                        </t>
+                                                                    </t>
+                                                                </h2>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="stage['name'] == 'Cancelled'">
+                                    <div class="col-md-3 mb-1">
+                                        <div class="card h-100 border-0 close-tickets position-relative">
+                                            <div class="o_main o_dashboard_action" title="My Closed tickets"
+                                                name="website_axis_helpdesk_advance.helpdesk_all_closed_ticket_action_main">
+                                                <div class="card-body">
+                                                    <h4 class="card-title text-white text-center">Cancelled</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img class="img-fluid ticket-img"
+                                                                src="/website_axis_helpdesk_advance/static/src/img/success-rate-icn.png" width="55"/>
+                                                        </div>
+                                                        <div class="col-xl-6 col-md-8">
+                                                            <a class="text-white">
+                                                                <h2 class="card-text ticket-title text-white" id="count_no">
+                                                                    <t t-foreach="values['stage_count']" t-as="count_val" t-key="key8">
+                                                                        <t t-if="count_val['stage_id'] == stage['name']">
+                                                                           <t t-esc="count_val['stage_count']"/>
+                                                                        </t>
+                                                                    </t>
+                                                                </h2>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                        </t>
+                    </div>
+                </div>
+                <div class="mx-4 box-shadow-cou">
+                    <table class="table coustome-header-color">
+                        <tbody id="tbody_new">
+                            <t t-foreach='stage_config' t-as='stage' t-key="key9">
+                                 <tr class="top-header-cou">
+                                     <td colspan="6" style="background-color:#27c2b4;border: 1px solid #27c2b4;">
+                                    <strong>Stage: <t t-esc="stage.name"/></strong>
+                                     </td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:#deeaff;border-right: 1px solid #dbd3d3;border: 1px solid #27c2b4">Ticket no</td>
+                                    <td style="background-color:#deeaff;border-right: 1px solid #dbd3d3;border: 1px solid #27c2b4">Customer Name</td>
+                                    <td style="background-color:#deeaff;border-right: 1px solid #dbd3d3;border: 1px solid #27c2b4">Create Date</td>
+                                    <td style="background-color:#deeaff;border-right: 1px solid #dbd3d3;border: 1px solid #27c2b4">Last Update Date</td>
+                                    <td style="background-color:#deeaff;border-right: 1px solid #dbd3d3;border: 1px solid #27c2b4">Assign User</td>
+                                    <td style="background-color:#deeaff;border-right: 1px solid #dbd3d3;border: 1px solid #27c2b4">Stage</td>
+                                </tr>
+                                <t t-foreach="ticket_id" t-as="ticket" t-key="key1111">
+                                    <t t-if="ticket['helpdesk_stage_id'] == stage.name">
+                                    <tr style="border: 1px solid #27c2b4;">
+                                        <td style="border-right: 1px solid #dbd3d3;">
+                                            <t t-esc="ticket['number']"/>
+                                        </td>
+                                        <td style="border-right: 1px solid #dbd3d3;">
+                                            <t t-esc="ticket['partner_id']"/>
+                                        </td>
+                                        <td style="border-right: 1px solid #dbd3d3;">
+                                            <t t-esc="ticket['create_date']"/>
+                                        </td>
+                                        <td style="border-right: 1px solid #dbd3d3;">
+                                            <t t-esc="ticket['write_date']"/>
+                                        </td>
+                                        <td style="border-right: 1px solid #dbd3d3;">
+                                            <t t-esc="ticket['res_user_id']"/>
+                                        </td>
+                                        <td style="border-right: 1px solid #dbd3d3;">
+                                            <t t-esc="ticket['helpdesk_stage_id']"/>
+                                        </td>
+                                    </tr>
+                                    </t>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div t-if="show_demo" class="o_welcome_message">
+                <div class="o_welcome_image">
+                    <i class="fa fa-smile-o fa-5x" title="Welcome" role="img" aria-label="Welcome"></i>
+                </div>
+                <div class="o_welcome_content">
+                    <br/>
+                    <h4>
+                        <strong>Ready to boost your customer service?</strong>
+                    </h4>
+                    <h4>This dashboard will activate once you have created your first ticket.</h4>
+                    <t t-if="values['email_alias'] and values['alias_name'] and values['alias_domain']">
+                        <h4>Send an email to
+                            <strong>
+                                <a t-attf-href="mailto:#{values['alias_name']}@#{values['alias_domain']}"
+                                   class="o_inline_link"><t t-esc="values['alias_name']"/>@
+                                    <t t-esc="values['alias_domain']"/>
+                                </a>
+                            </strong>
+                            to create a ticket.
+                        </h4>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

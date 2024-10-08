@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="helpdesk_create_ticket_from_front_end" name="Create Ticket">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container">
+                    <div class="col-md-12">
+                        <form action="/helpdesk/form/submit" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+
+                            <div class="create_tickets_page" style="width:50%;margin-top:30px;margin-left:20%;">
+                                <div>
+                                    <h2 style="margin-left:250px;">Create Ticket</h2>
+
+                                </div>
+
+                                <div class="row form-group form-field mb-1">
+                                    <div class="col-sm-4 col-lg-3 text-sm-right o_website_form_required">
+                                        <label class="col-form-label o_fake_editable" for="ticket_type_id">
+                                            Ticket Type
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <select class="form-control o_website_form_input" name="ticket_type_id" required="1">
+                                            <!-- Ensure that email is present before trying to split -->
+                                            <t t-if="request.env.user.email">
+                                                <t t-set="user_email_domain" t-value="request.env.user.email.split('@')[1]"/>
+                                                <t t-set="user_email" t-value="request.env.user.email"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-set="user_email_domain" t-value="''"/>
+                                                <t t-set="user_email" t-value="''"/>
+                                            </t>
+                                            
+                                            <!-- Loop through the ticket types -->
+                                            <t t-foreach="ticket_types" t-as="type">
+                                                <t t-if="type.email_domain == user_email_domain or user_email in type.email_ids.mapped('email')">
+                                                    <option t-att-value="type.id">
+                                                        <t t-esc="type.name"/>
+                                                    </option>
+                                                </t>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row form-field o_website_form_required  mb-1">
+                                    <div class="col-sm-4 col-lg-3 text-sm-right">
+                                        <label class="col-form-label" for="name">Subject</label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <input type="text" class="form-control o_website_form_input" name="name"
+                                               required="1"/>
+                                    </div>
+                                </div>
+
+                                <t t-if ="request.env.user._is_admin()">
+                                <div class="form-group row form-field o_website_form_required  mb-1">
+                                    <div class="col-sm-4 col-lg-3 text-sm-right">
+                                        <label class="col-form-label" for="partner_name">Customer</label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+
+                                       <input type="text" class="form-control" name="partner_name"  t-attf-value="#{partner_name}" required="1"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if ="not request.env.user._is_admin()">
+                                <div class="form-group row form-field o_website_form_required  mb-1">
+                                    <div class="col-sm-4 col-lg-3 text-sm-right">
+                                        <label class="col-form-label" for="partner_name">Customer</label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+
+                                       <input type="text" class="form-control" name="partner_name"  t-attf-value="#{partner_name}" required="1"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                             <t t-if ="request.env.user._is_admin()">
+                                  <div class="form-group row form-field o_website_form_required  mb-1">
+                                    <div class="col-sm-4 col-lg-3 text-sm-right">
+                                        <label class="col-form-label" for="partner_email">Email</label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <input type="email" class="form-control" name="partner_email"  t-attf-value="#{partner_email}" required="1"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                             <t t-if ="not request.env.user._is_admin()">
+                                  <div class="form-group row form-field o_website_form_required  mb-1">
+                                    <div class="col-sm-4 col-lg-3 text-sm-right">
+                                        <label class="col-form-label" for="partner_email">Email</label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <input type="email" class="form-control" name="partner_email"  t-attf-value="#{partner_email}" required="1"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                                <div class="row form-group form-field o_website_form_custom o_fake_not_editable o_website_form_required  mb-1">
+                                    <div class="col-sm-4 col-lg-3 text-sm-right">
+                                        <label class="col-form-label o_fake_editable" for="priority">Priority</label>
+                                    </div>
+                                    <div class="col-lg-7 col-sm-8">
+                                        <div class="d-inline-block priority-rate">
+                                            <div class="rate" required="1">
+                                                <input type="radio" id="star3" name="priority" value="3"
+                                                       class="form-control o_website_form_input"/>
+                                                <label for="star3" title="text">3 stars</label>
+                                                <input type="radio" id="star2" name="priority" value="2"
+                                                       class="form-control o_website_form_input"/>
+                                                <label for="star2" title="text">2 stars</label>
+                                                <input type="radio" id="star1" name="priority" value="1"
+                                                       class="form-control o_website_form_input"/>
+                                                <label for="star1" title="text">1 star</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row form-field o_fake_not_editable mb-1">
+                                    <div class="col-sm-4 col-lg-3 text-sm-right">
+                                        <label class="col-form-label o_fake_editable" for="description">Summary
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <textarea class="form-control o_website_form_input" required="1" name="description"
+                                                  style="margin-top: 0px; margin-bottom: 0px; height: 165px;"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div t-if="is_attachment == True" class="form-group row form-field o_fake_not_editable mb-1">
+                                     <div class="col-sm-4 col-lg-3 text-sm-right">
+                                        <label class="col-form-label o_fake_editable" for="description">Attachment
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-8">
+                                        <input type="file" name="attachment"  class="form-control o_website_form_input"  accept="image/*,application/pdf,video/*" style="height: 45px;"/>
+<!--                                        <input type="file" name="attachment"  class="form-control o_website_form_input" multiple="true" accept="image/*,application/pdf,video/*"/>-->
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group row mb-1 mt-1" style="margin-left:50%;">
+                                    <div class="col-12">
+                                        <button type="submit" name="helpdesk_form_submit" class="btn btn-primary">Create Ticket</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="view_helpdesk_ticket_sla_policy_success" name="Helpdesk Form Successfully Submitted">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container">
+                    <div class="col-md-12">
+
+                        <div clas="row">
+                            <t t-if="request.session.get('form_builder_model_model', '') == 'axis.helpdesk.ticket'">
+                                <t t-set="ticket" t-value="request.website._website_form_last_record().sudo()"/>
+                            </t>
+                            <h1 class="text-center">
+                                <i class="fa fa-check-circle fa-2x text-success" role="img" aria-label="Success"
+                                   title="Success"/>
+                            </h1>
+                            <t t-if="ticket">
+                                <h1 class="text-center">Your Ticket Number is
+                                    <a t-if="request.session.uid" t-attf-href="/axis/helpdesk/ticket/#{ticket.id}">
+                                        <span>
+                                            <t t-esc="ticket.number"/>
+                                        </span>
+                                    </a>
+                                    <a t-if="not request.session.get('uid')"
+                                       t-attf-href="/axis/helpdesk/ticket/#{ticket.id}">#
+                                        <span t-field="ticket.id"/>
+                                    </a>
+                                    .
+                                </h1>
+                            </t>
+                            <h1 class="text-center">Thank you for submitting your issue, our team will get right on
+                                it!
+                            </h1>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

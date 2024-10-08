@@ -1,0 +1,82 @@
+<odoo>
+    <data>
+         <template id="view_helpdesk_ticket_rating" name="Helpdesk Ticket Rating Page">
+            <t t-call="portal.portal_layout">
+                <div id="wrap">
+                    <div class="oe_structure" id="oe_structure_helpdesk_team_rating_1"/>
+                    <div class="container oe_website_rating_team">
+                        <h1 t-esc="team.name" class="text-center"/>
+                        <div class="row mb32">
+                            <div class="col-lg-8">
+                                <t t-call="helpdesk.team_rating_data"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oe_structure" id="oe_structure_helpdesk_team_rating_2"/>
+                </div>
+            </t>
+        </template>
+
+                 <record id="assigned_request_email_template" model="mail.template">
+                    <field name="name">Ticket: Assigned Template</field>
+                         <field name="model_id" ref="website_axis_helpdesk_advance.model_axis_helpdesk_ticket"/>
+                    <field name="subject">{{object.display_name}}</field>
+                        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+            <!--         <field name="email_from">{{ (object.user_id.email_formatted or user.email_formatted or '') }}</field>-->
+            <!--        <field name="email_from">{{object.res_user_id.email}}</field>-->
+                    <field name="email_to">{{ (object.res_user_id.email_formatted or user.email_formatted or '') }}</field>
+                    <field name="email_cc">{{object.helpdesk_team_id.alias_name}}{{object.helpdesk_team_id.alias_domain}}</field>
+                    <field name="body_html" type="html">
+                        <div>
+                 Dear <t t-out="object.sudo().res_user_id.name or 'Madam/Sir'"></t>,<br/><br/>
+                New Ticket is assign to you.
+                <a t-att-href="(object.get_portal_url() )"><t t-out="object.name or ''"></t></a>
+                has been received and Please check from your side and  <t t-out="object.helpdesk_team_id.name or ''"></t> team.
+                The reference of your ticket is <t t-out="object.number or ''"></t>.<br /><br />
+
+                <div style="text-align: center; margin: 16px 0px 16px 0px;">
+                    <a style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;"
+                       t-att-href="(object.get_portal_url() )">View the tickets</a><br/>
+                </div>
+
+                To add additional comments, reply to this email.<br/><br/>
+
+                Thank you,<br/><br/>
+            </div>
+                    </field>
+                    <field name="lang">{{object.res_user_id.lang or user.lang}}</field>
+                    <field name="auto_delete" eval="False"/>
+                </record>
+
+
+         <record id="axis_helpdesk_ticket_new_create" model="mail.template">
+        <field name="name">New Ticket Created</field>
+             <field name="model_id" ref="website_axis_helpdesk_advance.model_axis_helpdesk_ticket"/>
+        <field name="subject">{{object.display_name}}</field>
+        <field name="email_from">{{(object.res_user_id.email_formatted or user.email_formatted)}}</field>
+        <field name="email_to">{{(object.partner_email)}}</field>
+        <field name="email_cc">{{object.helpdesk_team_id.alias_name}}{{object.helpdesk_team_id.alias_domain}}</field>
+        <field name="body_html" type="html">
+            <div>
+     Dear <t t-out="object.sudo().partner_id.name or 'Madam/Sir'">Azure Interior</t>,<br/><br/>
+    Your request
+    <a t-att-href="(object.get_portal_url() )"><t t-out="object.name or ''"></t></a>
+    has been received and is being reviewed by our <t t-out="object.helpdesk_team_id.name or ''"></t> team.
+    The reference of your ticket is <t t-out="object.id or ''"></t>.<br /><br />
+
+    <div style="text-align: center; margin: 16px 0px 16px 0px;">
+        <a style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;"
+           t-att-href="(object.get_portal_url() )">View the tickets</a><br/>
+    </div>
+
+    To add additional comments, reply to this email.<br/><br/>
+
+    Thank you,<br/><br/>
+    <t t-out="object.helpdesk_team_id.name or 'Helpdesk' "> Helpdesk</t> Team.
+</div>
+        </field>
+        <field name="lang">{{object.partner_id or object.res_user_id.lang or user.lang}}</field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+    </data>
+</odoo>

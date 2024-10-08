@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="helpdesk_sequence_number" model="ir.sequence">
+            <field name="name">Helpdesk Sequence</field>
+            <field name="code">helpdesk.ticket.sequence</field>
+            <field name="prefix">TICK-</field>
+            <field name="padding">5</field>
+            <field eval="1" name="number_increment"/>
+        </record>
+
+        <record id="axis_helpdesk_ticket_customer_team" model="axis.helpdesk.ticket.team">
+            <field name="name">Customer Care</field>
+            <field name="alias_name">support</field>
+            <field name="alias_model_id">155</field>
+            <field name="use_sla" eval="True"/>
+        </record>
+
+        <record id="axis_helpdesk_stage_new" model="axis.helpdesk.stage">
+        <field name="name">New</field>
+        <field name="sequence">0</field>
+        <field name="team_ids" eval="[(4, ref('axis_helpdesk_ticket_customer_team'))]"/>
+        <field name="is_close" eval="False"/>
+        <field name="mail_template_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_new_create"/>
+    </record>
+
+    <record id="axis_helpdesk_stage_inprogress" model="axis.helpdesk.stage">
+        <field name="name">In Progress</field>
+        <field name="sequence">1</field>
+        <field name="team_ids" eval="[(4, ref('axis_helpdesk_ticket_customer_team'))]"/>
+        <field name="is_close" eval="False"/>
+    </record>
+
+    <record id="axis_helpdesk_stage_solved" model="axis.helpdesk.stage">
+        <field name="name">Solved</field>
+        <field name="team_ids" eval="[(4, ref('axis_helpdesk_ticket_customer_team'))]"/>
+        <field name="sequence">2</field>
+        <field name="is_close" eval="True"/>
+        <field name="folded_kanban" eval="True"/>
+    </record>
+
+     <record id="axis_helpdesk_stage_onhold" model="axis.helpdesk.stage">
+        <field name="name">On Hold</field>
+        <field name="team_ids" eval="[(4, ref('axis_helpdesk_ticket_customer_team'))]"/>
+        <field name="sequence">3</field>
+        <field name="is_close" eval="True"/>
+        <field name="folded_kanban" eval="True"/>
+    </record>
+
+    <record id="axis_helpdesk_stage_cancelled" model="axis.helpdesk.stage">
+        <field name="name">Cancelled</field>
+        <field name="sequence">4</field>
+        <field name="team_ids" eval="[(4, ref('axis_helpdesk_ticket_customer_team'))]"/>
+        <field name="is_close" eval="True"/>
+        <field name="folded_kanban" eval="True"/>
+    </record>
+     <record id="helpdesk_ticket_stage_done" model="axis.helpdesk.stage">
+        <field name="name">Done </field>
+        <field name="sequence">5</field>
+        <field name="is_close" eval="True"/>
+        <field name="folded_kanban" eval="True"/>
+    </record>
+
+
+    </data>
+</odoo>

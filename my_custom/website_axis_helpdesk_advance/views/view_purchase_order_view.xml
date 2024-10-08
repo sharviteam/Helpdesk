@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+         <record id="view_purchase_order_ticket_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.ticket.inherit.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_invoice']" position="before">
+                <button type="object" name="action_view_ticket" class="oe_stat_button" icon="fa-tasks"  groups="website_axis_helpdesk_advance.group_purchase_helpdesk_ticket">
+                    <field name="ticket_count" widget="statinfo" string="Ticket" />
+                </button>
+            </xpath>
+        </field>
+         </record>
+    </data>
+</odoo>

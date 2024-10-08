@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="axis_helpdesk_ticket_summary_tree" model="ir.actions.act_window">
+        <field name="name">Tree</field>
+        <field name="res_model">axis.helpdesk.ticket</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_tree"/>
+    </record>
+
+    <record id="axis_helpdesk_ticket_view_graph" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.graph.analysis</field>
+        <field name="model">axis.helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <graph string="Helpdesk Ticket Analysis" stacked="True">
+                <field name="helpdesk_team_id" type="row"/>
+                <field name="helpdesk_stage_id" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+
+    <record id="axis_helpdesk_ticket_bar_chart" model="ir.actions.act_window">
+        <field name="name">Bar Chart</field>
+        <field name="res_model">axis.helpdesk.ticket</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_view_graph"/>
+    </record>
+
+    <record id="axis_helpdesk_ticket_pivot_graph" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.pivot</field>
+        <field name="model">axis.helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <pivot string="Helpdesk Tickets">
+                <field name="create_date" type="row" interval="day"/>
+                <field name="helpdesk_stage_id" type="col"/>
+                <field name="color" invisible="1"/>
+            </pivot>
+        </field>
+    </record>
+
+      <record id="axis_helpdesk_ticket_line_graph" model="ir.actions.act_window">
+        <field name="name">Pie Graph</field>
+        <field name="res_model">axis.helpdesk.ticket</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_pivot_graph"/>
+    </record>
+    <record id="axis_helpdesk_ticket_graph_analysis" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.graph</field>
+            <field name="model">axis.helpdesk.ticket</field>
+            <field name="arch" type="xml">
+                <graph string="Performance Analysis" stacked="True" >
+                    <field name="helpdesk_stage_id" type="col"/>
+                    <field name="helpdesk_team_id" type="row"/>
+                    <field name="closed_hours" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+      <record id="axis_helpdesk_ticket_team_graph" model="ir.actions.act_window">
+        <field name="name">Team Graph</field>
+        <field name="res_model">axis.helpdesk.ticket</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="website_axis_helpdesk_advance.axis_helpdesk_ticket_graph_analysis"/>
+    </record>
+
+    <record id="axis_helpdesk_ticket_form_view" model="ir.ui.view">
+        <field name="name">Summary Form</field>
+        <field name="model">board.board</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Summary">
+                <board style="2-1">
+                    <column>
+                        <action
+                            string="Helpdesk Team"
+                            name="%(axis_helpdesk_ticket_bar_chart)d"/>
+
+                         <action
+                            string="Team Graph"
+                            name="%(axis_helpdesk_ticket_team_graph)d"/>
+                         <action
+                            string="Tickets List"
+                            name="%(axis_helpdesk_ticket_summary_tree)d"/>
+                        <action string="Overall Tickets Status"
+                            name="%(axis_helpdesk_ticket_line_graph)d"/>
+                  </column>
+                </board>
+            </form>
+        </field>
+    </record>
+
+    <record id="axis_helpdesk_ticket_summary" model="ir.actions.act_window">
+        <field name="name">Summary</field>
+        <field name="res_model">board.board</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="axis_helpdesk_ticket_form_view"/>
+    </record>
+
+     <menuitem id="axis_helpdesk_sumary_view" name="Summary" action="axis_helpdesk_ticket_summary"
+              sequence="10" parent="website_axis_helpdesk_advance.main_menu_helpdesk_ticket"
+              groups="website_axis_helpdesk_advance.group_helpdesk_ticket_manager,website_axis_helpdesk_advance.group_helpdesk_ticket_admin"/>
+
+</odoo>

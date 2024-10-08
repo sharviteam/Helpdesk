@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="axis_helpdesk_ticket_type_tree">
+            <field name="name">axis.helpdesk.ticket.type.tree</field>
+            <field name="model">axis.helpdesk.ticket.type</field>
+            <field name="arch" type="xml">
+                <tree string="Ticket Types">
+                    <field name="name"/>
+                    <field name="email_domain"/>
+                    <field name="email_ids"/>
+                    <field name="team_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="axis_helpdesk_ticket_type_form">
+            <field name="name">axis.helpdesk.ticket.type.form</field>
+            <field name="model">axis.helpdesk.ticket.type</field>
+            <field name="arch" type="xml">
+                <form string="Ticket Type">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="email_ids"/>
+                        </group>
+                        <group>
+                            <field name="type_based_on"/>
+                            <field name="team_ids" invisible="type_based_on != 'helpdesk_team'"/>
+                            <field name="user_ids" widget="many2many_tags" invisible="type_based_on != 'users'"/>
+                            <field name="email_domain"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_axis_helpdesk_ticket_type" model="ir.actions.act_window">
+            <field name="name">Ticket Types</field>
+            <field name="res_model">axis.helpdesk.ticket.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Ticket Types" id="axis_helpdesk_ticket_type" parent="helpdesk_ticket_configuration" action="action_axis_helpdesk_ticket_type" sequence="5"/>
+    </data>
+</odoo>
